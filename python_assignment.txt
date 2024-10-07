@@ -1,0 +1,144 @@
+1. What is garbage collection in the context of python, and why is it important?
+   Can you explain how memory management is handled in python?
+2. What are the key differences between numpy arrays and Python lists, and can you explain the importance of using numpy arrays in numerical computations?
+3. How does list comprehension work in python and can you provide an example of using it to generate a list of squared values or filter a list based ona condition?
+4. Can you explain the concepts of shallow and deep copying including when each is appropriate, and howdeep copying is implemented?
+5. Explain with examples the difference  between lists and tuples?
+
+
+1. What is garbage collection in the context of python, and why is it important?
+   Can you explain how memory management is handled in python?
+
+Garbage collection is an automated memory management process that deletes objects when they are no longer in use. This system deletes the unused objects and reuses its memory slot for new objects.
+
+    IMPORTANCE OF GARBAGE COLLECTION
+1. Memory efficiency - the automatic memory management ensures that unused objcts are deallocated and ensures efficient memory management
+2. Convenient to the developer - developers do not need to dealoccate memory manually making it very convenient unlike other low-level languages.
+3. performance optimization- Generational garbage collector optimizes performance by focusing more on collecting newer objects, which are more likely to be garbage, minimizing on time spent for garbage collection.
+   
+Two methods are used in garbage collection and that is:
+    1. Reference counting - removes an object after it reaches zero
+    2. Generational garbage collection- can delete cyclic reference to delete unused objects.
+REFERENCE COUNTING
+In reference counting references are counted and allocated to a memory location. If one object has three names then it has three references susch as
+ if we assign the variable `a` to 50, the object 50 has one reference but if the same object has different variables then the reference count increases by one, that is if we assign 50 to a variable `b` the reference count inreases to 2.
+        `a` = 50
+        `b` = `a`
+        `c` = 50
+    The object 50 has 3 references. Assigning the variable `a` to `none` we create a none object and the previous object has no reference therefore garbage collection deletes it.
+The `del()` only removes the name and reference to the object but does not delete the object. The object is deleted from the system if the reference count is zero.
+
+GENERATIONAL GARBAGE COLLECTION
+This is a type of trace-based garbage collection it breaks cyclic references and deletes the unused objects even if they refer tothemselves. a list of generations is created after a program is run to keep track of every object in memoory the generations are 0, 1 and 2 lists.
+Newly created objects are put in generation 0 list, for objects that are to be discarded a list is created for them, reference cycles are created.credits.
+If an object has no reference outside it is discarded, for objects that survived they are put in the generation 1 list. The same applies to generation 1 list, the survivals in generation 1 are put in the generation 2 list. The objects in the generation 2 list stay there until the end of the program excecution.
+
+
+
+2. What are the key differences between numpy arrays and Python lists, and can you explain the importance of using numpy arrays in numerical computations?
+Numpy arrays sre python extension modules, and provides fast and efficient operations on arrays of homogeneous data.
+Numpy arrays facilitate advanced mathematical and other types of operationson large numbers of data.
+
+Python list is a collection that is ordered and changeable.
+a.) Types of data
+Python list -  can store elements of different types (heterogenous)
+Numpy array - only stores data of the same type (homogeneous)
+
+b.) Memory usage
+Python list -takes more memory because each element is a python object.
+NumPy arrays - Elemnents are stored in contigous memory blocks and therefore more memory-efficient.
+
+c.) Time of excecution
+Python list - Due to element by element processing the numerical competitions becomes slower.
+NumPy arrays - The operations are vectorized therefore the numerical computations are faster.
+
+d.) supported operations
+Python list - the only supported operations are basic list operations such as append, remove etc. 
+NumPy array - Advanced mathematical operations are supported such as (matrix multiplication, statistical functions)
+
+e.) Functionality
+Python list - designed for general purpose  data structures
+NumPy array - designed speciffically for numerical computations
+
+importance of using NumPy arrays in numerical computations.
+1. Memory management - Numpy arrays are stored in contigous blocks of memory therefore reduces overhead and improves access speed.
+2. vectorized operations - operations are applied on entire arrays at once rather than element by element. This redults in significant performance improvements for numerical computations.
+3. Broadcasting NumPy supports broadcasting, allowing you to perform operations on arrays of different shapes in a way that generalizes them to larger arrays.
+4. Extensive Mathematical Functions - NumPy provides a wide range of mathematical functions, making it very ideal for scientific and numerical computations.
+
+
+3. How does list comprehension work in python and can you provide an example of using it to generate a list of squared values or filter a list based on a condition?
+List comprehension offers a concise way to create a new list based on the values of an existing list. That is you have a list of numbers and you want to have another list of numbers either double of that or half of that.
+This creates a clear and readable syntax that often replaces the traditional for loops.
+
+Generating a list of squared values:
+    squares = [x**2 for x in range(1, 10)]
+    print(squares)
+
+output:
+ [1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+        squares = [x**2 for x in (2,5,6, 10, 20, 400)]
+        print(squares)
+output:
+        [4, 25, 36, 100, 400, 160000]
+
+filtering a list based on a condition:
+        events = [4, 3, 6,8, 7,9,11,2,12,16,17,19,20]
+        even_no = [x for x in events if x%2 == 0]
+        print(even_no)
+        print(odd_no)
+output:
+        [4, 6, 8, 2, 12, 16, 20]
+        [3, 7, 9, 11, 17, 19]
+
+
+4. Can you explain the concepts of shallow and deep copying including when each is appropriate, and howdeep copying is implemented?
+shallow copy and deep copy are two different approaches to copying objects or data structures.
+
+Shallow copying- creates a new object and copies the refferences of the original objects elemnents into the new object. it references the same memory location as the original object for its elements.
+    Use a shallow copy when you only need to duplicate the outer object and do not intend to modify the inner mutable objects.
+Deep copying creates a new object and recursively copies the elementsof the original object, including any object referenced within it. A new object has its own memory locations for all the elements, including the referenced objcts.
+     Use deep copy when you need to completely duplicate an object and all of its nested objects, and ensure that changes to the copy do not affect the original.
+Deep copy is implemented using the pythons copy module. The function copy.deepcopy() recursively copies objects at all levels
+    import copy
+    list1 = [1, 2, 3]
+    list2 = copy.deepcopy(list1) 
+
+    list2.append(4)
+    print(list1) 
+    print(list2) 
+
+Output: 
+        [1, 2, 3]
+Output: 
+        [1, 2, 3, 4]
+
+
+5. Explain with examples the difference  between lists and tuples?
+Lists and Tuples are python sequences thatstore collection of items. Lists are mutable that is they can be changed after creation while Tuple are immutable and cannnot be changed after creation. 
+Making changes to a list:
+    list = [1, 2, 3, 4]
+
+    list[0] = 100  
+    list.append(5)  
+
+    print("Appended List:", list)
+output:
+        Modified List: [100, 2, 3, 4, 5]
+Making changes to a tuple:
+    Tuple = (1,2,3,4)
+    Tuple[0] = 100
+    Tuple.append(5)
+    print("Appended tuple", Tuple)
+output:
+    TypeError                                 Traceback (most recent call last)
+    Cell In[41], line 2
+        1 Tuple = (1,2,3,4)
+    ----> 2 Tuple[0] = 100
+        3 Tuple.append(5)
+        4 print("Appended tuple", Tuple)
+
+    TypeError: 'tuple' object does not support item assignment
+
+Tuple does not support making changes. Therefore you can only ommit the changes by either making them comments
